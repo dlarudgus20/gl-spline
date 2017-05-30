@@ -23,7 +23,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
- * @file shadow.fs
+ * @file shadow.frag
  * @date 2015. 10. 26.
  * @author dlarudgus20
  * @copyright The BSD (2-Clause) License
