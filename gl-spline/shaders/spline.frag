@@ -23,46 +23,45 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
- * @file ShaderManager.h
+ * @file shadow.frag
  * @date 2015. 10. 26.
  * @author dlarudgus20
  * @copyright The BSD (2-Clause) License
  */
 
-#ifndef SHADERMANAGER_H_
-#define SHADERMANAGER_H_
+#version 330 core
 
-#include "Shader.h"
+#define SPLINE_CIRCLE 0
 
-class ShaderManager : private ext::noncopyable
+struct SplineCircle
 {
-public:
-    static ShaderManager &getInstance();
-
-    enum
-    {
-        SHADOW,
-        SHADOW_DEPTH,
-        SPLINE,
-
-        COUNT_SHADER
-    };
-
-private:
-    static constexpr const char* m_names[COUNT_SHADER] = {
-        "shadow",
-        "shadow_depth",
-        "spline",
-    };
-
-    Shader m_arShader[COUNT_SHADER];
-
-    ShaderManager() = default;
-
-public:
-    Shader &getShader(int index);
-
-    void initialize();
+    vec2 center;
+    float radius;
+    float thickness;
 };
 
-#endif /* SHADERMANAGER_H_ */
+in VS_OUT
+{
+    vec2 fragPos;
+} vs_out;
+
+out vec4 color;
+
+uniform int kindSpline;
+
+uniform SplineCircle splineCircle;
+
+float sdf_circle(vec2 pos);
+
+void main()
+{
+    float sdf = sdf_circle(vs_out.fragPos);
+    float step = smoothstep(0.0f, 1.0f, (abs(sdf) - 1.0f));
+    color = vec4(vec3(step), 1.0f - step);
+}
+
+float sdf_circle(vec2 pos)
+{
+    float len = length(splineCircle.center - pos);
+    return (len - splineCircle.radius) / splineCircle.thickness;
+}

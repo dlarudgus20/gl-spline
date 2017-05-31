@@ -159,3 +159,66 @@ GLuint Shader::loadFile(const char *filename, GLuint shaderType, std::string &in
         throw CompileError("[" + std::string(filename) + "] I/O Error : " + e.what());
     }
 }
+
+void Shader::setUniform1f(const char *var, GLfloat f)
+{
+    glUniform1f(findUniform(var), f);
+}
+void Shader::setUniform1f(const std::string &var, GLfloat f)
+{
+    setUniform1f(var.c_str(), f);
+}
+
+void Shader::setUniform2f(const char *var, const glm::vec2 &vec2)
+{
+    glUniform2fv(findUniform(var), 1, glm::value_ptr(vec2));
+}
+void Shader::setUniform2f(const std::string &var, const glm::vec2 &vec2)
+{
+    setUniform2f(var.c_str(), vec2);
+}
+
+void Shader::setUniform3f(const char *var, const glm::vec3 &vec3)
+{
+    glUniform3fv(findUniform(var), 1, glm::value_ptr(vec3));
+}
+void Shader::setUniform3f(const std::string &var, const glm::vec3 &vec3)
+{
+    setUniform3f(var.c_str(), vec3);
+}
+
+void Shader::setUniform4f(const char *var, const glm::vec4 &vec4)
+{
+    glUniform4fv(findUniform(var), 1, glm::value_ptr(vec4));
+}
+void Shader::setUniform4f(const std::string &var, const glm::vec4 &vec4)
+{
+    setUniform4f(var.c_str(), vec4);
+}
+
+void Shader::setUniform1i(const char *var, GLint i)
+{
+    glUniform1i(findUniform(var), i);
+}
+void Shader::setUniform1i(const std::string &var, GLint i)
+{
+    setUniform1i(var.c_str(), i);
+}
+
+void Shader::setUniformMatrix3f(const char *var, const glm::mat3 &mat)
+{
+    glUniformMatrix3fv(findUniform(var), 1, GL_FALSE, glm::value_ptr(mat));
+}
+void Shader::setUniformMatrix3f(const std::string &var, const glm::mat3 &mat)
+{
+    setUniformMatrix3f(var.c_str(), mat);
+}
+
+void Shader::setUniformMatrix4f(const char *var, const glm::mat4 &mat)
+{
+    glUniformMatrix4fv(findUniform(var), 1, GL_FALSE, glm::value_ptr(mat));
+}
+void Shader::setUniformMatrix4f(const std::string &var, const glm::mat4 &mat)
+{
+    setUniformMatrix4f(var.c_str(), mat);
+}

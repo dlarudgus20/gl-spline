@@ -57,9 +57,6 @@
     <ClInclude Include="Shader.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Shader_impl.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="ShaderManager.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -154,6 +151,12 @@
       <Filter>shader</Filter>
     </None>
     <None Include="shaders\shadow.vert">
+      <Filter>shader</Filter>
+    </None>
+    <None Include="shaders\spline.frag">
+      <Filter>shader</Filter>
+    </None>
+    <None Include="shaders\spline.vert">
       <Filter>shader</Filter>
     </None>
   </ItemGroup>

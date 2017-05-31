@@ -57,6 +57,9 @@ public:
     void setUniform1f(const char *var, GLfloat f);
     void setUniform1f(const std::string &var, GLfloat f);
 
+    void setUniform2f(const char *var, const glm::vec2 &vec2);
+    void setUniform2f(const std::string &var, const glm::vec2 &vec2);
+
     void setUniform3f(const char *var, const glm::vec3 &vec3);
     void setUniform3f(const std::string &var, const glm::vec3 &vec3);
 
@@ -96,7 +99,5 @@ private:
 
     static GLuint loadFile(const char *filename, GLuint kind, std::string &infoString);
 };
-
-#include "Shader_impl.h"
 
 #endif /* SHADER_H_ */

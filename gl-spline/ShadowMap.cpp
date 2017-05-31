@@ -74,6 +74,39 @@ void ShadowMap::renderScene(Scene *pScene, const glm::mat4 &projMatrix, const gl
     Shader &shadowShader = sm.getShader(ShaderManager::SHADOW);
     Shader &shadowDepthShader = sm.getShader(ShaderManager::SHADOW_DEPTH);
 
+    if (1)
+    {
+        Shader& shader = sm.getShader(ShaderManager::SPLINE);
+        glViewport(0, 0, viewportWidth, viewportHeight);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+        shader.use();
+        //shader.setUniform1i("kindSpline", 0);
+        shader.setUniform2f("splineCircle.center", { 0.0f, 0.0f });
+        shader.setUniform1f("splineCircle.radius", 0.6f);
+        shader.setUniform1f("splineCircle.thickness", 0.005f);
+
+        static const float vertices[] = {
+            -1.0f, 1.0f, -1.0f, -1.0f, 1.0f, -1.0f,
+            -1.0f, 1.0f, 1.0f, -1.0f, 1.0f, 1.0f
+        };
+        unsigned vbo, vao;
+        glGenVertexArrays(1, &vao);
+        glGenBuffers(1, &vbo);
+        glBindVertexArray(vao);
+        glBindBuffer(GL_ARRAY_BUFFER, vbo);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+        glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (const void*)0);
+        glEnableVertexAttribArray(0);
+        glDrawArrays(GL_TRIANGLES, 0, 6);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glBindVertexArray(0);
+
+        return;
+    }
+
     glBindFramebuffer(GL_FRAMEBUFFER, m_depthMapFBO);
     {
         glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);

@@ -23,46 +23,24 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
- * @file ShaderManager.h
+ * @file shadow.vert
  * @date 2015. 10. 26.
  * @author dlarudgus20
  * @copyright The BSD (2-Clause) License
  */
 
-#ifndef SHADERMANAGER_H_
-#define SHADERMANAGER_H_
+#version 330 core
 
-#include "Shader.h"
+layout(location = 0) in vec2 position;
 
-class ShaderManager : private ext::noncopyable
+out VS_OUT
 {
-public:
-    static ShaderManager &getInstance();
+    vec2 fragPos;
+} vs_out;
 
-    enum
-    {
-        SHADOW,
-        SHADOW_DEPTH,
-        SPLINE,
+void main()
+{
+    vs_out.fragPos = position;
 
-        COUNT_SHADER
-    };
-
-private:
-    static constexpr const char* m_names[COUNT_SHADER] = {
-        "shadow",
-        "shadow_depth",
-        "spline",
-    };
-
-    Shader m_arShader[COUNT_SHADER];
-
-    ShaderManager() = default;
-
-public:
-    Shader &getShader(int index);
-
-    void initialize();
-};
-
-#endif /* SHADERMANAGER_H_ */
+    gl_Position = vec4(position, 0.0f, 1.0f);
+}
